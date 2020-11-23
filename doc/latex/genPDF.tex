@@ -1,0 +1,118 @@
+\documentclass{article} %文章类型
+\usepackage{CJKutf8} %China Japan Korea 
+\usepackage{draftwatermark} %水印
+\usepackage{graphicx} % 插图
+\usepackage{listings} %代码块
+\usepackage{xcolor} %颜色
+\usepackage{url}
+\usepackage{hyperref} %参考引用
+
+%-----------------参考 引用设置--------------
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	%filecolor=blue,
+	urlcolor=blue,
+	%citecolor=cyan,
+}
+
+%--------------------代码块配置--------------
+\lstset{
+	columns=fixed,       
+	%numbers=left,                                        % 在左侧显示行号
+	frame=none,                                          % 不显示背景边框
+	backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+	keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+	numberstyle=\footnotesize\color{darkgray},           % 设定行号格式
+	commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+	showstringspaces=false,                              % 不显示字符串中的空格
+	language=C,                                          % 设置语言
+}
+
+%--------------------add watermark ---------
+\SetWatermarkText{Excelfore}
+\SetWatermarkLightness{0.9}
+\SetWatermarkScale{6}
+
+%---------------------页眉 页脚 ------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} 
+%\fancyhead[R]{\leftmark} %一级标题
+%\fancyhead[R]{\rightmark} %二级标题
+%\fancyhead[C]{zhong}
+\fancyhead[R]{\scriptsize 3155 Kearney Street, Fremont, CA 94538\\+1.510.868.2500 $\cdot$ \underline{\url{www.excelfore.com}}}
+\fancyhead[L]{\includegraphics[scale=2]{excelfore.png}}
+%\fancyfoot[C]{centfoot}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Excelfore}
+\renewcommand{\headrulewidth}{1pt} %页眉横线
+\renewcommand{\footrulewidth}{0.5pt} %页脚横线
+
+
+\title{Latex如何生成PDF}
+\author{Excelfore 刘小龙}
+\begin{document}
+	\begin{CJK}{UTF8}{gbsn}
+
+	\maketitle
+	
+	\newpage
+	\tableofcontents %目录
+
+	\newpage % 新建页面让目录独立成页
+	
+	\section{工具安装}
+	\begin{lstlisting}
+sudo apt-get install latex-cjk-*
+sudo apt install doxygen-latex
+	\end{lstlisting}
+
+	\section{修改tex文件}
+	进入doxygen生成的latex目录里面
+	修改refman.tex文件，可以配置格式
+
+	\section{添加水印}
+	\begin{verbatim}
+		\usepackage{draftwatermark}
+
+		%--------------------add watermark ---------
+		\SetWatermarkText{Excelfore}  %要加水印字符
+		\SetWatermarkLightness{0.8}   %透明度
+		\SetWatermarkScale{5}         %大小
+	\end{verbatim}
+
+	\section{生成PDF}
+		\subsection{Doxygen模式生成PDF}
+		如果refman.tex是由Doxygen生成的，那么同时也会生成一个Makefile文件。
+		我们只需要在latex目录执行 make 命令就可以了
+		\begin{lstlisting}
+make
+		\end{lstlisting}
+		\subsection{单独tex文件生成PDF}
+		\begin{lstlisting}
+xelatex test.tex
+pdflatex test.tex
+		\end{lstlisting}
+	
+	\section{常见问题处理}
+	\subsection{中文丢字}
+	%插入latex语句
+	\begin{verbatim}
+		\usepackage{CJKutf8}
+		\begin{document}                   
+		\begin{CJK}{UTF8}{gbsn}
+			
+		%文档内容
+		...
+			
+		\end{CJK}                                                                  
+		\end{document}
+	\end{verbatim}
+
+
+	\newpage
+    
+\end{CJK}
+\end{document}
